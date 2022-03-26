@@ -27,7 +27,7 @@ export default {
   background-size: cover;
   color: white;
   width: 60%;
-  height: 440px;
+  height: 420px;
   padding: 30px;
   font-family: 'Montserrat', sans-serif;
   margin: auto;
@@ -36,7 +36,9 @@ export default {
 }
 
 h1 {
-    margin-top: 150px;
+    width: 50%;
+    margin-top: 145px;
     color: dodgerblue;
+    font-size: 2.4em;
 }
 </style>

@@ -168,7 +168,7 @@ public class UserService {
         }
         
         try {
-        	String msg = "Please click <a href='https://localhost:8080/resetpassword?showEmailForm=false&showPasswordForm=true&email=" + resetPasswordDto.getEmail() + "'>here</a> to reset your password";
+        	String msg = "Please click <a href='https://localhost:8080/#/?email=" + resetPasswordDto.getEmail() + "'>here</a> to reset your password";
             new EmailService("smtp.mail.com", 25, "user", "password")
               .sendMail("to@mail.com", resetPasswordDto.getEmail(), 
             		  "AuthApp Reset Password", msg);
