@@ -67,8 +67,11 @@ export default {
 }
 
 .form-control :hover {
-  padding: 1px;
-  border: 2px solid dodgerblue;
+  outline: 1px solid dodgerblue;
+}
+
+.form-control :focus {
+  outline: 2.5px solid dodgerblue;
 }
 
 .form-control input::placeholder {
@@ -79,8 +82,11 @@ export default {
 .btn {
   background-color: dodgerblue;
   border: none;
+  /*
   width: 11%;
   height: 35px;
+  */
+  padding: 6px 12px 6px 12px;
   border-radius: 20px;
   font-family: 'Poppins', sans-serif;
   font-size: 1.1em;
