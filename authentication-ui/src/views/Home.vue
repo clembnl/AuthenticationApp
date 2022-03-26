@@ -2,12 +2,14 @@
   <div class="container">
     <Header />
     <h1>{{ title }}</h1>
-    <div id="option">
+    <div id="option" v-show="sign">
       <h2>Or <span @click="onClick()" class="click">{{ option }}</span></h2>
     </div>
     <SignInForm v-show="showSignIn" @signin="signIn" />
-    <SignUpForm v-show="showSignUp" @signup="signUp"/>
-    <ResetButton />
+    <SignUpForm v-show="showSignUp" @signup="signUp" />
+    <EmailForm v-show="showEmailForm" @sendemail="sendEmail" />
+    <PasswordForm v-show="showPasswordForm" @resetpassword="resetPassword" />
+    <ResetButton v-show="showReset" @reset="reset" />
   </div>
 </template>
 
@@ -15,6 +17,9 @@
 import Header from "../components/Header"
 import SignInForm from "../components/SignInForm"
 import SignUpForm from "../components/SignUpForm"
+import ResetButton from '../components/ResetButton'
+import EmailForm from '../components/EmailForm'
+import PasswordForm from '../components/PasswordForm'
 import axios from "axios"
 import swal from "sweetalert"
 
@@ -24,6 +29,9 @@ export default {
     Header,
     SignInForm,
     SignUpForm,
+    ResetButton,
+    EmailForm,
+    PasswordForm,
   },
   data() {
     return {
@@ -31,6 +39,10 @@ export default {
       option: 'Register',
       showSignIn: true,
       showSignUp: false,
+      sign: true,
+      showEmailForm: false,
+      showPasswordForm: false,
+      showReset: true,
     }
   },
   methods: {
@@ -70,6 +82,80 @@ export default {
         this.title = 'Login'
         this.option = 'Register'        
       }
+    },
+    reset() {
+      this.showSignIn = false
+      this.showSignUp = false
+      this.showEmailForm = true
+      this.showReset = false
+      this.sign = false
+
+      this.title = 'Reset your password'
+    },
+    async sendEmail(email) {
+      const resetUserPassword = {
+        email: email,
+        password: "",
+      }
+
+      await axios
+        .post('api/users/resetpassword', resetUserPassword)
+        .then(() => {
+          this.showSignIn = false
+          this.showSignUp = false
+          this.showEmailForm = false
+          this.showPasswordForm = true
+          this.showReset = false
+          this.sign = false  
+          
+          this.email = email
+
+          swal({
+            text: "Email send successfully",
+            icon: "success",
+          });
+        })
+        .catch((err) => console.log("err", err));
+    },
+    async resetPassword(password) {
+      const resetUserPassword = {
+        email: this.email,
+        password: password,
+      }
+
+      await axios
+        .post('api/users/setpasswordreset', resetUserPassword)
+        .then(() => {
+          
+          this.showSignIn = true
+          this.showSignUp = false
+          this.showEmailForm = false
+          this.showPasswordForm = false
+          this.showReset = true
+          this.sign = true
+          this.title = 'Login'    
+          
+          this.$router.replace("/")
+
+          swal({
+            text: "Password reset successfully",
+            icon: "success",
+          });
+        })
+        .catch((err) => console.log("err", err));      
+    },
+  },
+  created() {
+    if (this.$route.query.email) {
+      this.showSignIn = false
+      this.showSignUp = false
+      this.showEmailForm = false
+      this.showPasswordForm = true
+      this.showReset = false
+      this.sign = false  
+      
+      this.title = this.title = 'Reset your password'
+      this.email = this.$route.query.email    
     }
   }
 }
@@ -83,7 +169,7 @@ export default {
   background-size: cover;
   color: white;
   width: 60%;
-  height: 440px;
+  height: 420px;
   padding: 30px;
   font-family: 'Montserrat', sans-serif;
   margin: auto;
