@@ -13,9 +13,11 @@ header{
 h1 {
     color: white;
     margin-left: 10px;
+    font-size: 1em;
 }
 
 a {
+    padding-left: 3px;
     text-decoration: none;
     color: white;
 }

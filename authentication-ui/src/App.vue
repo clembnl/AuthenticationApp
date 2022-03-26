@@ -3,9 +3,9 @@
 </template>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Poppins:wght@500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,600&family=Poppins:wght@500;700&display=swap');
 
 body{
-  background-color: rgb(100, 100, 98);
+  background-color: rgb(90, 90, 88);
 }
 </style>
