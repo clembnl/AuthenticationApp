@@ -3,8 +3,7 @@
     <Header />
     <h1>{{ title }}</h1>
     <div id="option">
-      <h2>Or </h2>
-      <button @click="onClick()" class="btn">{{ option }}</button>
+      <h2>Or <span @click="onClick()" class="click">{{ option }}</span></h2>
     </div>
     <SignInForm v-show="showSignIn" @signin="signIn" />
     <SignUpForm v-show="showSignUp" @signup="signUp"/>
@@ -39,6 +38,7 @@ export default {
       await axios
         .post('api/users/signin', user)
         .then(() => {
+          this.username = user.username
           this.$router.push({name: "MyPage", params: {username: this.username}})
           swal({
             text: "User signin successful",
@@ -75,35 +75,39 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .container {
   background-color: rgb(80, 80, 80);
+  background-image: url("../assets/security_img.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
   color: white;
-  width: 70%;
+  width: 60%;
   height: 440px;
-  padding: 20px;
+  padding: 30px;
   font-family: 'Montserrat', sans-serif;
   margin: auto;
   margin-top: 100px;
-}
-
-#option {
-  display: flex;
+  border-radius: 20px;
 }
 
 h1 {
   font-family: 'Poppins', sans-serif;
+  margin-top: 30px;
+  margin-bottom: 0;
+  font-size: 2.1em;
 }
 
 h2 {
-  font-size: 1.1em;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1em;
+  font-style: italic;
+  margin: 0;
 }
 
-.btn {
+.click {
   color: dodgerblue;
-  background: none;
-  border: none;
   font-size: 1.1em;
-  padding: 0;
+  font-weight: bold;
 }
 </style>
