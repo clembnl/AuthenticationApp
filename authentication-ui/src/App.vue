@@ -8,4 +8,8 @@
 body{
   background-color: rgb(90, 90, 88);
 }
+
+:focus {
+    outline: 0;
+}
 </style>
